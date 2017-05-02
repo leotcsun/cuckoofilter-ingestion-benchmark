@@ -1,29 +1,31 @@
 package edu.brown.cs2270.benchmark;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.github.mgunlogson.cuckoofilter4j.CuckooFilter;
-import com.google.common.hash.Funnel;
 import com.google.common.hash.Funnels;
 
+public class Strategy3 extends BenchmarkStrategy {
+	
+	private final CuckooFilter<Integer> filter;
 
-public class Strategy1 extends BenchmarkStrategy {
-	
-	private final String tableQuery = Schema.getUnindexedSchema();
-	
-	@Override
-	public String getName() {
-		return "Strategy 1";
+	public Strategy3(int dataSize) {
+		super();
+		this.filter = new CuckooFilter.Builder<Integer>(Funnels.integerFunnel(), dataSize)
+				.withFalsePositiveRate(0.02)
+				.build();
 	}
 	
 	@Override
+	public String getName() {
+		return "Strategy 3";
+	}
+
+	@Override
 	public String getDescription() {
-		return "no table index, ask for db for duplicates";
+		return "no index, use local cuckoo filter for lookup";
 	}
 
 	@Override
@@ -38,20 +40,11 @@ public class Strategy1 extends BenchmarkStrategy {
 
 	@Override
 	public boolean shouldProcess(Connection conn, Vote vote) throws SQLException {
-		final String query = "SELECT COUNT(*) FROM votes WHERE "
-				+ "voter = ? AND phone = ?;";
-		
-		PreparedStatement prep = conn.prepareStatement(query);
-		prep.setString(1, vote.getVoter());
-		prep.setString(2, vote.getContestant());
-		
-		ResultSet result = prep.executeQuery();
-		
-		return result.next() && result.getInt(1) == 0;
+		return !filter.mightContain(vote.hashCode());
 	}
 
 	@Override
 	public void updateStates(Vote vote) {
-		return;
+		filter.put(vote.hashCode());
 	}
 }

@@ -6,16 +6,16 @@
   <property name="src" location="src"/>
   <property name="build" location="build"/>
   <property name="dist" location="dist"/>
+  <property name="lib" location="lib"/>
 	
-	   <path id="all-path">
-	        <pathelement path="${src}" />   
-	        <pathelement path="${test}" />  
-
-	        <pathelement path="${bin}" />
-	            
-	        <pathelement path="${log4j2}" />     
-	        <pathelement path="${lib}" />     
-	    </path>
+  <path id="classpath">
+    <fileset dir="${lib}">
+        <include name="**/*.jar" />
+    </fileset>
+  	<fileset dir="${src}">
+  	    <include name="**/*" />
+  	</fileset>
+  </path>
 
 
   <target name="init">
@@ -28,8 +28,8 @@
   <target name="compile" depends="init"
         description="compile the source">
     <!-- Compile the java code from ${src} into ${build} -->
-    <javac srcdir="${src}" destdir="${build}">
-        <classpath refid="all-path" />
+    <javac srcdir="${src}" destdir="${build}" target="1.7">
+        <classpath refid="classpath" />
     </javac>
   </target>
 
@@ -41,11 +41,27 @@
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
     <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}"/>
   </target>
+	
+  <target name="jar">
+    <mkdir dir="build/jar"/>
+      <jar destfile="build/jar/run.jar" basedir="bin/">
+          <manifest>
+              <attribute name="Main-Class" value="edu.brown.cs2270.benchmark.Main"/>
+          </manifest>
+      </jar>
+  </target>
+	
+  <target name="run">
+      <java jar="build/jar/run.jar" fork="true"/>
+  </target>
 
   <target name="clean"
         description="clean up">
     <!-- Delete the ${build} and ${dist} directory trees -->
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
+    <delete dir="${bin}"/>
   </target>
+	
+  <target name="build" depends="clean,compile,jar"/>
 </project>

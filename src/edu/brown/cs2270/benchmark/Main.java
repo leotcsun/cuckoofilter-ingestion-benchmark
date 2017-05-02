@@ -12,8 +12,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		try {
-			BenchmarkStrategy strat = new Strategy1(DB_PATH, CSV_PATH);
-			BenchmarkRunner runner = new BenchmarkRunner(strat);
+			BenchmarkStrategy strat = new Strategy1(DB_PATH);
+			BenchmarkRunner runner = new BenchmarkRunner(CSV_PATH, strat);
 			runner.run();
 		} catch (Exception e) {
 			LOG.error(String.format("Unable to boostrap strategy, %s", e));

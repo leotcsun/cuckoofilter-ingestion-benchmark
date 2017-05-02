@@ -16,17 +16,13 @@ import au.com.bytecode.opencsv.CSVReader;
 public abstract class BenchmarkStrategy {
 	
 	protected final Connection conn;
-	protected final CSVReader reader;
 	
-	protected BenchmarkStrategy(String db, String csv) throws ClassNotFoundException, SQLException, FileNotFoundException {
+	protected BenchmarkStrategy(String db) throws ClassNotFoundException, SQLException, FileNotFoundException {
 		System.out.println("bootstrapping strategy " + this.getName());
 		Class.forName("org.sqlite.JDBC");
 		
 		URL dbUrl = getClass().getResource(db);
 		this.conn = DriverManager.getConnection("jdbc:sqlite:" + dbUrl.getPath());
-		
-		URL csvUrl = getClass().getResource(csv);
-		this.reader = new CSVReader(new FileReader(csvUrl.getPath()));
 	}
 	
 	public abstract String getName();
@@ -51,7 +47,7 @@ public abstract class BenchmarkStrategy {
 		conn.close();
 	}
 	
-	public abstract void runBenchmark() throws SQLException, IOException;
+	public abstract void processVote(Vote vote) throws SQLException, IOException;
 	
 	public void insertVote(Vote vote) throws SQLException {
 		final String query = "INSERT OR IGNORE INTO votes (voter, voteFor, phone) VALUES (?, ?, ?);";

@@ -23,5 +23,8 @@ public class Vote {
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-
+	
+	public static Vote fromCsv(String[] line) {
+		return new Vote(line[0], line[1], line[2]);
+	}
 }

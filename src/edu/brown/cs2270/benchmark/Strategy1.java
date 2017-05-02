@@ -13,8 +13,8 @@ public class Strategy1 extends BenchmarkStrategy {
 	
 	private final CuckooFilter<byte[]> filter = new CuckooFilter.Builder<>(Funnels.byteArrayFunnel(), 2000000).build();
 
-	protected Strategy1(String db, String csv) throws ClassNotFoundException, SQLException, FileNotFoundException {
-		super(db, csv);
+	protected Strategy1(String db) throws ClassNotFoundException, SQLException, FileNotFoundException {
+		super(db);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class Strategy1 extends BenchmarkStrategy {
 	}
 
 	@Override
-	public void runBenchmark() throws SQLException, IOException {
+	public void processVote(Vote vote) throws SQLException, IOException {
 //		
 //		String[] nextLine;
 //		while ((nextLine = reader.readNext()) != null)  {
@@ -46,12 +46,18 @@ public class Strategy1 extends BenchmarkStrategy {
 //			insertVote(vote);
 //		}
 		
-		for (int i = 0; i < 1000; i++) {
-			if (i != 0 && i % 100 == 0) {
-				System.out.println(String.format("%d records inserted...", i));
-			}
-			Vote vote = new Vote("voter", "votedfor", "1234567");
-			insertVote(vote);
-		}
+//		for (int i = 0; i < 200; i++) {
+//			Vote vote = new Vote("voter", "votedfor", "1234567");
+//			filter.put(String.format("%s.%s.%s", vote.getVoter(), vote.getVoteFor(), vote.getPhoneNumber()).getBytes());
+//			filter.mightContain(String.format("%s.%s.%s", vote.getVoter(), vote.getVoteFor(), vote.getPhoneNumber()).getBytes());
+//		}
+		
+//		for (int i = 0; i < 1000; i++) {
+//			if (i != 0 && i % 100 == 0) {
+//				System.out.println(String.format("%d records inserted...", i));
+//			}
+//			Vote vote = new Vote("voter", "votedfor", "1234567");
+//			insertVote(vote);
+//		}
 	}
 }

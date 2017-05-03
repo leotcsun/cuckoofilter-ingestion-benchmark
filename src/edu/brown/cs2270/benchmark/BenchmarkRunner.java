@@ -2,9 +2,14 @@ package edu.brown.cs2270.benchmark;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,13 +32,10 @@ public class BenchmarkRunner {
 	public BenchmarkRunner(String db, String csv, BenchmarkStrategy strat) throws FileNotFoundException, SQLException {
 		this.strat = strat;
 		
-		URL dbUrl = this.getClass().getClassLoader().getResource(db);
-		System.out.println(dbUrl);
-		this.conn = DriverManager.getConnection("jdbc:sqlite:" + dbUrl.getPath());
-		
-		URL csvUrl = getClass().getResource(csv);
-		System.out.println(csvUrl);
-		this.reader = new CSVReader(new FileReader(csvUrl.getPath()));
+		this.conn = DriverManager.getConnection("jdbc:sqlite:resource:" + db);
+
+		InputStream stream = this.getClass().getClassLoader().getResourceAsStream(csv);
+		this.reader = new CSVReader(new BufferedReader(new InputStreamReader(stream)));
 	}
 	
 	public void run(int dataSize) throws SQLException, IOException {

@@ -27,10 +27,12 @@ public class BenchmarkRunner {
 	public BenchmarkRunner(String db, String csv, BenchmarkStrategy strat) throws FileNotFoundException, SQLException {
 		this.strat = strat;
 		
-		URL dbUrl = getClass().getResource(db);
+		URL dbUrl = this.getClass().getClassLoader().getResource(db);
+		System.out.println(dbUrl);
 		this.conn = DriverManager.getConnection("jdbc:sqlite:" + dbUrl.getPath());
 		
 		URL csvUrl = getClass().getResource(csv);
+		System.out.println(csvUrl);
 		this.reader = new CSVReader(new FileReader(csvUrl.getPath()));
 	}
 	

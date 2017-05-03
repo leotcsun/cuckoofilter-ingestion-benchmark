@@ -6,5 +6,4 @@ public class Strategy1b extends Strategy1 {
 	protected String getCreateTableSql() {
 		return Schema.getIndexedSchema();
 	}
-
 }

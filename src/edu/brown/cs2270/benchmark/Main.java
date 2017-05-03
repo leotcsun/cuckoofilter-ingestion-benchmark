@@ -5,9 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 public class Main {
 	
-	private final static String DB_PATH = "/data/db.db";
+	private final static String DB_PATH = "db.db";
 	private final static int DATA_SIZE = 20000;
-	private final static String CSV_PATH = String.format("/data/votes-%d.csv", DATA_SIZE);
+	private final static String CSV_PATH = String.format("votes-%d.csv", DATA_SIZE);
 	
 	private static final Logger LOG = LogManager.getLogger(Main.class);
 	

@@ -3,7 +3,7 @@ package edu.brown.cs2270.benchmark;
 public class Main {
 	
 	private final static String DB_PATH = "db.db";
-	private final static int DATA_SIZE = 20000;
+	private final static int DATA_SIZE = 5000;
 	private final static String CSV_PATH = String.format("data/votes-%d.csv", DATA_SIZE);
 	
 	

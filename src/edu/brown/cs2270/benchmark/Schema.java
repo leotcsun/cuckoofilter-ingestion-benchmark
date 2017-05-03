@@ -4,7 +4,7 @@ public class Schema {
 
 	public static String getUnindexedSchema() {
 		return "CREATE TABLE votes ("
-				+ "voteId INTEGER PRIMARY KEY, "
+				+ "voteId SERIAL PRIMARY KEY, "
 				+ "voter VARCHAR(255), "
 				+ "contestant VARCHAR(255), "
 				+ "phone VARCHAR(10));";
@@ -12,7 +12,7 @@ public class Schema {
 	
 	public static String getIndexedSchema() {
 		return "CREATE TABLE votes ("
-				+ "voteId INTEGER PRIMARY KEY, "
+				+ "voteId SERIAL PRIMARY KEY, "
 				+ "voter VARCHAR(255), "
 				+ "contestant VARCHAR(255), "
 				+ "phone VARCHAR(10));"

@@ -39,7 +39,7 @@ public abstract class BenchmarkStrategy {
 	public abstract void updateStates(Vote vote);
 	
 	public void insertVote(Connection conn, Vote vote) throws SQLException {
-		final String query = "INSERT OR IGNORE INTO votes (voter, contestant, phone) VALUES (?, ?, ?);";
+		final String query = "INSERT INTO votes (voter, contestant, phone) VALUES (?, ?, ?);";
 	
 		PreparedStatement prep = conn.prepareStatement(query);
 		prep.setString(1, vote.getVoter());

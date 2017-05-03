@@ -32,7 +32,8 @@ public class BenchmarkRunner {
 	public BenchmarkRunner(String db, String csv, BenchmarkStrategy strat) throws FileNotFoundException, SQLException {
 		this.strat = strat;
 		
-		this.conn = DriverManager.getConnection("jdbc:sqlite:resource:" + db);
+		DriverManager.registerDriver(new org.postgresql.Driver());
+		this.conn = DriverManager.getConnection("jdbc:postgresql://cs2270test.ckf69kqatzre.us-east-1.rds.amazonaws.com:5432/cs2270", "leosun", "90072000");
 		System.out.println("conn is " + this.conn);
 		InputStream stream = this.getClass().getClassLoader().getResourceAsStream(csv);
 		System.out.println("hi " + stream);
@@ -117,7 +118,7 @@ public class BenchmarkRunner {
 	}
 	
 	private String averageLookupTime() {
-		return String.format("%1$,.5f", totalBookkeepingTime * 1.0 / totalRead);
+		return String.format("%1$,.5f", totalLookupTime * 1.0 / totalRead);
 	}
 
 	private String averageProcessTime() {

@@ -33,8 +33,9 @@ public class BenchmarkRunner {
 		this.strat = strat;
 		
 		this.conn = DriverManager.getConnection("jdbc:sqlite:resource:" + db);
-
+		System.out.println("conn is " + this.conn);
 		InputStream stream = this.getClass().getClassLoader().getResourceAsStream(csv);
+		System.out.println("hi " + stream);
 		this.reader = new CSVReader(new BufferedReader(new InputStreamReader(stream)));
 	}
 	

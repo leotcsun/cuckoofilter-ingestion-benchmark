@@ -8,16 +8,16 @@ import com.github.mgunlogson.cuckoofilter4j.CuckooFilter;
 import com.google.common.hash.Funnels;
 
 public class Strategy3 extends BenchmarkStrategy {
-	
+
 	private final CuckooFilter<Integer> filter;
 
-	public Strategy3(int dataSize) {
+	public Strategy3(int dataSize, float rate) {
 		super();
 		this.filter = new CuckooFilter.Builder<Integer>(Funnels.integerFunnel(), dataSize)
-				.withFalsePositiveRate(0.02)
+				.withFalsePositiveRate(rate)
 				.build();
 	}
-	
+
 	@Override
 	public String getName() {
 		return "Strategy 3";

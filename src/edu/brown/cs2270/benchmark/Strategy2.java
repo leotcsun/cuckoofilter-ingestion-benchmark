@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Strategy2 extends BenchmarkStrategy {
-	
-	private final Set<Vote> set = new HashSet<Vote>();
-	
+
+	private final Set<String> set = new HashSet<String>();
+
 	@Override
 	public String getName() {
 		return "Strategy 2";
@@ -32,11 +32,11 @@ public class Strategy2 extends BenchmarkStrategy {
 
 	@Override
 	public boolean shouldProcess(Connection conn, Vote vote) throws SQLException {
-		return !set.contains(vote);
+		return !set.contains(String.format("%s.%s", vote.getVoter(), vote.getPhone()));
 	}
 
 	@Override
 	public void updateStates(Vote vote) {
-		set.add(vote);
+		set.add(String.format("%s.%s", vote.getVoter(), vote.getPhone()));
 	}
 }

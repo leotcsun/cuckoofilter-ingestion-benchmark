@@ -9,7 +9,7 @@ public class Schema {
 				+ "contestant VARCHAR(255), "
 				+ "phone VARCHAR(10));";
 	}
-	
+
 	public static String getIndexedSchema() {
 		return "CREATE TABLE votes ("
 				+ "voteId SERIAL PRIMARY KEY, "
@@ -18,5 +18,15 @@ public class Schema {
 				+ "phone VARCHAR(10));"
 				+ "CREATE INDEX voter_phone_index "
 				+ "ON votes (voter, phone);";
+	}
+
+	public static String getUniqueIndexedSchema() {
+	       return "CREATE TABLE votes ("
+	                + "voter VARCHAR(255), "
+	                + "contestant VARCHAR(255), "
+	                + "phone VARCHAR(10), "
+	                + "PRIMARY KEY (voter, phone)); "
+	                + "CREATE INDEX voter_phone_index "
+	                + "ON votes (voter, phone);";
 	}
 }

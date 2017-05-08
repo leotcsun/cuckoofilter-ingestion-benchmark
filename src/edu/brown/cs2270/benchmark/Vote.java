@@ -35,6 +35,8 @@ public class Vote {
         result = prime * result + ((contestant == null) ? 0 : contestant.hashCode());
         result = prime * result + ((phone == null) ? 0 : phone.hashCode());
         result = prime * result + ((voter == null) ? 0 : voter.hashCode());
+//        System.out.println("hash code is: " + result);
+
         return result;
     }
 

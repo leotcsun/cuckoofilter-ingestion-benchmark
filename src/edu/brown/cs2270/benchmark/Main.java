@@ -10,23 +10,24 @@ public class Main {
 	private final static float FALSE_POS_RATE = (float) 0.001;
 
 	// determines which csv file to read from
-	private final static int DATA_SIZE = 100_000;
+	private final static int DATA_SIZE = 100000;
 	private final static String CSV_PATH = String.format("data/votes-%d.csv", DATA_SIZE);
 
 	// set to true if you want the benchmark to pause after each run
 	private final static boolean PAUSE_BETWEEN_RUN = false;
 
 	// set to true if AWS postgres is used, false if a local SQLite instance is used
-	private final static boolean USE_REMOTE_DB = true;
+	private final static boolean USE_REMOTE_DB = false;
 
 	public static void main(String[] args) {
 		BenchmarkStrategy[] strategies = {
-				new Strategy1(),
-				new Strategy1b(),
-				new Strategy1c(),
-				new Strategy2(),
-				new Strategy3(DATA_SIZE, FALSE_POS_RATE),
-				new Strategy4(DATA_SIZE, FALSE_POS_RATE),
+//				new Strategy1(),
+//				new Strategy1b(),
+//				new Strategy1c(),
+//				new Strategy2(),
+//				new Strategy3(DATA_SIZE, FALSE_POS_RATE),
+				new Strategy3b(DATA_SIZE, FALSE_POS_RATE),
+//				new Strategy4(DATA_SIZE, FALSE_POS_RATE),
 		};
 
 		for (int i = 0; i < strategies.length; i++) {

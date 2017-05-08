@@ -6,6 +6,7 @@ public class CuckooFilter {
 	private final static int entriesPerBucket = 4;
 	private static int numBuckets;
 	private static final int maxNumKicks = 100;
+	private static final int bitSize = 8;
 	
 	private CuckooFilter(FilterTable table){
 		this.table = table;
@@ -33,7 +34,7 @@ public class CuckooFilter {
 	}
 	
 	public static int fingerprint(int item){
-		int unusedBits = Integer.SIZE - 4;
+		int unusedBits = Integer.SIZE - bitSize;
 		int ret = (item << unusedBits) >>> unusedBits;
 		if (ret == 0) {
 			ret += 1;
